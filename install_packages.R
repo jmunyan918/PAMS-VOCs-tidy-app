@@ -4,4 +4,4 @@
 # or if you recently updated or installed RStudio
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load("shiny", "tidyverse", "lubridate", "hms")
+pacman::p_load("shiny", "dplyr", "lubridate", "hms", "readr", "tidyr")
