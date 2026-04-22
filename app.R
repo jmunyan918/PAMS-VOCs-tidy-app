@@ -8,9 +8,11 @@
 #
 
 library(shiny)
-library(tidyverse)
+library(dplyr)
 library(lubridate)
 library(hms)
+library(readr)
+library(tidyr)
 
 # ---- UI ----
 ui <- fluidPage(
@@ -76,7 +78,7 @@ server <- function(input, output, session) {
     })
   })
   
-  # --- Reactive: Apply your tidying code ---
+  # --- Reactive: Data tidying code ---
   tidy_data <- reactive({
     req(raw_data())
     
@@ -153,6 +155,10 @@ server <- function(input, output, session) {
         complete(datetime = seq(from = first(datetime),
                                 to   = last(datetime),
                                 by   = "hours"))
+     
+       # fix format to display datetime in preview
+      # df <- df %>%
+      #   format(as.character(datetime)) --> not sure if this works yet
       
       # Add AQS codes row at the top
       df <- df %>%
@@ -218,7 +224,7 @@ server <- function(input, output, session) {
   # --- Green success message after tidying ---
   output$status <- renderUI({
     req(tidy_data())
-    tags$p("??? Data tidied successfully!",
+    tags$p("Data tidied successfully!",
            style = "color: green; font-weight: bold;")
   })
   
